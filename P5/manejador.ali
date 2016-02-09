@@ -1,0 +1,164 @@
+V "GNAT Lib v4.6"
+P SS ZX
+R nnnnnnnnnnnnnnnnnnnnnnnnnvnnnnnnnnvnnnnnnvnnvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+
+U manejador%b		manejador.adb		649235a7 NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W ada.finalization.list_controller%s  a-filico.adb  a-filico.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W chat_handlers%s	chat_handlers.adb	chat_handlers.ali
+W chat_messages%s	chat_messages.ads	chat_messages.ali
+W chat_variables%s	chat_variables.ads	chat_variables.ali
+W help%s		help.adb		help.ali
+W lower_layer_udp%s	lower_layer_udp.adb	lower_layer_udp.ali
+W system%s		system.ads		system.ali
+W system.finalization_implementation%s  s-finimp.adb  s-finimp.ali
+W system.finalization_root%s  s-finroo.adb	s-finroo.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W timed_handlers%s	timed_handlers.adb	timed_handlers.ali
+
+U manejador%s		manejador.ads		06043f0f EE NE OO PK
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20090409150019 343c83dd
+D a-charac.ads		20070912115821 2d3ec45b
+D a-chlat1.ads		20070912115821 2825df20
+D a-comlin.ads		20100623092347 e0accaa5
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-reatim.ads		20090409150019 63f07669
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150019 9cb836fb
+D a-strunb.ads		20101220072657 e684739b
+D a-tags.ads		20101021101406 c7695348
+D a-taside.ads		20090409150019 a4888134
+D a-textio.ads		20091028140912 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D ada_sockets.ads	20080723100827 372c9145
+D basic.ads		20141224113747 d3c787d0
+D body_p5.ads		20150106143400 5f99ae12
+D c_sockets.ads		20120529214139 44862f45
+D c_sockets_arch.ads	20120529194800 c328cf60
+D chat_handlers.ads	20150107205633 f01b4721
+D chat_messages.ads	20150103115410 45151934
+D chat_variables.ads	20150107204938 1e38a293
+D concurrency.ads	20081111152635 d11dedce
+D help.ads		20150107205504 1cfa40ed
+D interfac.ads		20090409150019 f77d8799
+D i-c.ads		20101007125900 809c38c4
+D i-cstrin.ads		20090417131547 f3023ec4
+D i-cstrea.ads		20100622165701 1bd72c32
+D keyed_lists_generic.ads  20080723100827 b050c1c0
+D lists_generic.ads	20080723100827 4cea129e
+D lower_layer.ads	20080723100827 bc61d30f
+D lower_layer-inet.ads	20080723100827 1d47d264
+D lower_layer-inet-udp.ads  20080723100827 60f0483f
+D lower_layer-inet-udp-uni.ads  20080723100827 c94f5d30
+D lower_layer_udp.ads	20080723100827 ec2df04c
+D manejador.ads		20150107204335 06043f0f
+D manejador.adb		20150107211032 07320a65
+D maps_g.ads		20141206234542 be65a7c1
+D maps_protector_g.ads	20141223223219 c05e88d5
+D ordered_maps_g.ads	20141224112444 4c31ca9a
+D ordered_maps_protector_g.ads  20141224112450 040782e0
+D system.ads		20140416172229 23e1f70b
+D s-atacco.ads		20090409150019 1dc856ad
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-imguns.ads		20090409150019 9ff43cf7
+D s-linux.ads		20090730092306 47911ab1
+D s-multip.ads		20101011073009 38ac9f73
+D s-osinte.ads		20101127183452 6e2d2e09
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stausa.ads		20101018101807 bba781f7
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-tasinf.ads		20090409150019 21316953
+D s-taspri.ads		20080408071349 af44aca8
+D s-taprop.ads		20090409150019 07f79e46
+D s-taskin.ads		20101021101406 b2eaee08
+D s-taprob.ads		20090409150019 502249e3
+D s-tpoben.ads		20090409150019 e8374469
+D s-tassta.ads		20101018103456 e88ef99e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D time_string.ads	20141224125547 f608b000
+D timed_handlers.ads	20141224144810 fc50485e
+D unchdeal.ads		20070406091342 214516a4
+X 1 ada.ads
+16K9*Ada 19e8 41|1r6 5r6 7r6 15r29 17r29 29r17
+X 5 a-comlin.ads
+38K13*Command_Line 139e21 41|7w10 17r33
+48V13*Argument{string} 41|24s79
+X 12 a-string.ads
+16K13*Strings 35e16 41|5r10 15r33
+X 14 a-strunb.ads
+77K21*Unbounded 490e26 41|5w18 15r41
+80R9*Unbounded_String 474e14 41|23r31 24r31
+95V13*To_Unbounded_String{80R9} 41|23s55 24s55
+X 17 a-textio.ads
+49K13*Text_IO 472e16 41|1w10 29r21
+264U14*Put_Line 41|29s29
+X 24 chat_handlers.ads
+14K9*Chat_Handlers 81e18 41|4w6 14r29
+43K17*Latest_Msgs[43|5] 41|31r20
+72w9*Map_Latest_Messages{43|7W9[43]} 41|31m39
+X 25 chat_messages.ads
+6K9*Chat_Messages 52e18 41|8w6 18r29
+12M14*Seq_N_T 41|25r30
+X 26 chat_variables.ads
+3K9*Chat_Variables 13e19 41|6w6 16r29
+8p9*EP_H_Create{39|23P12} 41|31r64 36r47
+9b9*Quit{boolean} 41|34m20 36m37
+10b9*S_Node{boolean} 41|36r88
+11p9*EP_S_Nodo{39|23P12} 41|36r100
+X 28 help.ads
+7K9*Help 25e9 41|3w6 36r17
+22U19*Leave_Chat 41|36s22
+X 35 lower_layer.ads
+112P9*Address_CA(110R9)
+184V13*"="{boolean} 33|30i18
+186V13*">="{boolean} 33|29i18
+X 39 lower_layer_udp.ads
+4K9*Lower_Layer_UDP 150e20 41|9w6 19r29
+23P12*End_Point_Type{35|112P9}
+148U14*Finalize 41|37s21
+X 40 manejador.ads
+1K9*Manejador 5l5 5e14 41|12b14 42l5 42t14
+3U19*Ctrl_C_Handler 41|22b19 40l13 40t27
+X 41 manejador.adb
+14K17 CH=14:29 31r17 31r36
+15K17 ASU=15:41 23r27 23r51 24r27 24r51
+16K17 CV=16:29 31r61 34r17 36r34 36r44 36r85 36r97
+17K17 ACL=17:33 24r75
+18K17 CM=18:29 25r27
+19K17 LLU=19:29 37r17
+23r17 Remark{14|80R9} 36r76
+24r17 Nick{14|80R9} 36r69
+25m17 Seq_N{25|12M14} 31m78 36r61
+26b17 Success{boolean} 31m86
+X 43 maps_protector_g.ads
+7W9*Prot_Map
+9U14*Get 41|31s32[24|43]
+X 77 timed_handlers.ads
+13K9*Timed_Handlers 41|2w6 10w6 38r17 77|30e19
+28U14*Finalize 41|38s32
+

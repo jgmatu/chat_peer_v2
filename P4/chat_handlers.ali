@@ -1,0 +1,195 @@
+V "GNAT Lib v4.6"
+P SS ZX
+R nnnnnnnvvvnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnvnnvnvnnnnnnnnnnnvnnnnvnnnnnnnnnnnnnnnn
+
+U chat_handlers%b	chat_handlers.adb	b84db9b4 NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W ada.streams%s		a-stream.ads		a-stream.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W aux_peer%s		aux_peer.adb		aux_peer.ali
+W chat_messages%s	chat_messages.ads	chat_messages.ali
+W debug%s		debug.adb		debug.ali
+W interfaces%s		interfac.ads		interfac.ali
+W pantalla%s		pantalla.adb		pantalla.ali
+W system.stream_attributes%s  s-stratt.adb	s-stratt.ali
+
+U chat_handlers%s	chat_handlers.ads	234d3078 EE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.unchecked_deallocation%s
+W lower_layer_udp%s	lower_layer_udp.adb	lower_layer_udp.ali
+W maps_g%s		maps_g.adb		maps_g.ali  AD
+W maps_protector_g%s	maps_protector_g.adb	maps_protector_g.ali  AD
+W system.concat_3%s	s-conca3.adb		s-conca3.ali
+W system.img_uns%s	s-imguns.adb		s-imguns.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+W time_string%s		time_string.adb		time_string.ali  AD
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20090409150019 343c83dd
+D a-charac.ads		20070912115821 2d3ec45b
+D a-chlat1.ads		20070912115821 2825df20
+D a-comlin.ads		20100623092347 e0accaa5
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-reatim.ads		20090409150019 63f07669
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150019 9cb836fb
+D a-strunb.ads		20101008130255 fe8d9a91
+D a-tags.ads		20101021101406 c7695348
+D a-taside.ads		20090409150019 a4888134
+D a-textio.ads		20091028140912 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D ada_sockets.ads	20080723100827 372c9145
+D aux_peer.ads		20141206233733 0684133a
+D c_sockets.ads		20120529214139 44862f45
+D c_sockets_arch.ads	20120529194800 c328cf60
+D chat_handlers.ads	20141206234400 5328e937
+D chat_handlers.adb	20141206233452 c61f21ba
+D chat_messages.ads	20141206233913 e8841ca8
+D concurrency.ads	20081111152635 d11dedce
+D debug.ads		20141125195829 410922c8
+D interfac.ads		20090409150019 f77d8799
+D i-c.ads		20101007125900 809c38c4
+D i-cstrin.ads		20090417131547 f3023ec4
+D i-cstrea.ads		20100622165701 1bd72c32
+D keyed_lists_generic.ads  20080723100827 b050c1c0
+D lists_generic.ads	20080723100827 4cea129e
+D lower_layer.ads	20080723100827 bc61d30f
+D lower_layer-inet.ads	20080723100827 1d47d264
+D lower_layer-inet-udp.ads  20080723100827 60f0483f
+D lower_layer-inet-udp-uni.ads  20080723100827 c94f5d30
+D lower_layer_udp.ads	20080723100827 ec2df04c
+D maps_g.ads		20141206234542 be65a7c1
+D maps_g.adb		20141206234532 0ba72171
+D maps_protector_g.ads	20141129113508 c05e88d5
+D maps_protector_g.adb	20141125195635 30a62c0c
+D pantalla.ads		20141125195901 9c520c57
+D system.ads		20120503162406 2d1a1afa
+D s-atacco.ads		20090409150019 1dc856ad
+D s-conca3.ads		20090420091404 762a026a
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-imguns.ads		20090409150019 9ff43cf7
+D s-linux.ads		20090730092306 47911ab1
+D s-multip.ads		20101011073009 38ac9f73
+D s-osinte.ads		20101127183452 6e2d2e09
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stausa.ads		20101018101807 bba781f7
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-tasinf.ads		20090409150019 21316953
+D s-taspri.ads		20080408071349 af44aca8
+D s-taprop.ads		20090409150019 07f79e46
+D s-taskin.ads		20101021101406 b2eaee08
+D s-taprob.ads		20090409150019 502249e3
+D s-tpoben.ads		20090409150019 e8374469
+D s-tassta.ads		20101018103456 e88ef99e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D time_string.ads	20141129230026 d64f85ca
+D unchdeal.ads		20070406091342 214516a4
+X 1 ada.ads
+16K9*Ada 19e8 24|5r6 16r31 25|3r6 8r6 12r29 15r29
+X 2 a-calend.ads
+36K13*Calendar 358e17 24|5w10 16r35
+38I9*Time 24|16r44
+X 5 a-comlin.ads
+38K13*Command_Line 139e21 25|8w10 15r33
+X 12 a-string.ads
+16K13*Strings 35e16 25|3r10 12r33
+X 14 a-strunb.ads
+39K21*Unbounded 437e26 25|3w18 12r41
+42R9*Unbounded_String 404e14 25|17r22
+X 21 aux_peer.ads
+8K9*Aux_Peer 47e13 25|7w6 14r29
+40U19*RCV_Admision 25|27s36
+42U19*RCV_Admision_End 25|29s36
+44U19*RCV_Writers 25|31s36
+46U19*RCV_Logouts 25|34s36
+X 24 chat_handlers.ads
+9K9*Chat_Handlers 49l5 49e18 25|10b14 40l5 40t18
+10K17*LLU=10:29 15r58 20r25 21r35 25r61 30r31 31r35 46r43 46r71 46r109 25|18r18
+. 21r43 21r71 21r108
+11K17*TS=11:29 18r31
+13M14*Seq_N_T 26r31 32r37 42r17
+15K17*NP_Neighbors[40|16] 35r52
+25K17*NP_Latest_Msgs[40|16] 37r54
+33i17*Handler_Call_Counter{natural}
+35K17*Neighbors[42|5] 40r25
+37K17*Latest_Msgs[42|5] 41r31
+40w9*Map_Neighbors{42|7W9[35]}
+41w9*Map_Latest_Messages{42|7W9[37]}
+42m9*Seq_N{13M14}
+46U11*Peer_Handler 46>25 46>63 46^91 25|21b19 38l13 38t25
+46p25 From{39|23P12} 25|21b33
+46p63 To{39|23P12} 25|21b63 27r61 29r64 31r59 34r60
+46p91 P_Buffer(39|8R12) 25|21b91 24r47 27r50 29r53 31r48 34r49
+X 25 chat_handlers.adb
+12K17 ASU=12:41 17r18
+13K17 CM=13:29 22r24 24r25 26r30 28r30 30r30 33r30
+14K17 AP=14:29 27r33 29r33 31r33 34r33
+15K17 ACL=15:33
+22e17 Mess{26|5E14} 24m17 25r22
+X 26 chat_messages.ads
+3K9*Chat_Messages 25|6w6 13r29 26|7e18
+5E14*Message_Type 25|22r27 24r28 26|5e72
+5n31*Init{5E14} 25|26r33
+5n46*Confirm{5E14} 25|28r33
+5n56*Writer{5E14} 25|30r33
+5n65*Logout{5E14} 25|33r33
+X 28 debug.ads
+3K9*Debug 25|4w6 36r33 28|24e10
+14U14*Put_Line 25|36s39
+X 35 lower_layer.ads
+112P9*Address_CA(110R9)
+184V13*"="{boolean} 33|30i18
+186V13*">="{boolean} 33|29i18
+X 39 lower_layer_udp.ads
+4K9*Lower_Layer_UDP 24|3w6 10r29 39|150e20
+8R12*Buffer_Type{35|58R9} 24|46r113 25|21r112
+23P12*End_Point_Type{35|112P9} 24|15r62 25r65 46r47 46r75 25|18r22 21r47
+. 21r75
+26V13*Image{string} 24|21r39 31r39
+32V13*"="{boolean} 24|20r29 30r35
+X 40 maps_g.ads
+7+9 Key_Type 24|15r45 25r47
+8+9 Value_Type 24|16r17 26r17
+9*4 Null_Key{7+9} 24|17r17 27r17
+10*4 Null_Value{8+9} 24|18r17 28r17
+11i4 Max_Length{natural} 24|19r17 29r17
+12V18 "="{boolean} 24|20r17 30r17
+13V18 Key_To_String{string} 24|21r17 31r17
+14V18 Value_To_String{string} 24|22r17 32r17
+16k9*Maps_G 24|4w6 15r37 25r39 40|64e11
+X 42 maps_protector_g.ads
+5k9*Maps_Protector_G 24|7w6 35r34 37r36 42|64e21
+7W9*Prot_Map 24|40r35[35] 41r43[37]
+X 44 pantalla.ads
+11K9*Pantalla 25|5w6 44|39e13
+X 76 time_string.ads
+3K9*time_string 24|6w6 11r29 22r37 76|11e16
+5V18*Image_1{string} 24|22r49
+9V18*Null_Clock{2|38I9} 24|18s34
+

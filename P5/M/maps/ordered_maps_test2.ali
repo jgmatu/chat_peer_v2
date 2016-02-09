@@ -1,0 +1,169 @@
+V "GNAT Lib v4.6"
+M P W=b
+P SS ZX
+R nnnvnnnnnnvnnnnnnnvvnvnnnvvnnnnvnnvnvnnnnvnnvnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnv1+nn
+
+U ordered_maps_test2%b	ordered_maps_test2.adb	2be9f912 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.finalization.list_controller%s  a-filico.adb  a-filico.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.unchecked_deallocation%s
+W debug%s		debug.adb		debug.ali
+W ordered_maps_g%s	ordered_maps_g.adb	ordered_maps_g.ali
+W ordered_maps_protector_g%s  ordered_maps_protector_g.adb  ordered_maps_protector_g.ali
+W pantalla%s		pantalla.adb		pantalla.ali
+W system%s		system.ads		system.ali
+W system.concat_2%s	s-conca2.adb		s-conca2.ali
+W system.concat_4%s	s-conca4.adb		s-conca4.ali
+W system.finalization_implementation%s  s-finimp.adb  s-finimp.ali
+W system.finalization_root%s  s-finroo.adb	s-finroo.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115821 2d3ec45b
+D a-chlat1.ads		20070912115821 2825df20
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150019 9cb836fb
+D a-strunb.ads		20101220072657 e684739b
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D debug.ads		20141125195829 410922c8
+D interfac.ads		20090409150019 f77d8799
+D i-c.ads		20101007125900 809c38c4
+D i-cstrea.ads		20100622165701 1bd72c32
+D ordered_maps_g.ads	20150108183339 9f38076f
+D ordered_maps_g.adb	20150108193535 41633004
+D ordered_maps_protector_g.ads  20150108183353 040782e0
+D ordered_maps_protector_g.adb  20150108183343 638a1c40
+D ordered_maps_test2.adb  20150108193631 bf15ce84
+D pantalla.ads		20141125195901 9c520c57
+D system.ads		20140416172229 23e1f70b
+D s-atacco.ads		20090409150019 1dc856ad
+D s-conca2.ads		20090420091404 fbd0f2fc
+D s-conca4.ads		20090420091404 025fe3be
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-imgint.ads		20090409150019 02dbe0c2
+D s-linux.ads		20090730092306 47911ab1
+D s-multip.ads		20101011073009 38ac9f73
+D s-osinte.ads		20101127183452 6e2d2e09
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stausa.ads		20101018101807 bba781f7
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-tasinf.ads		20090409150019 21316953
+D s-taspri.ads		20080408071349 af44aca8
+D s-taskin.ads		20101021101406 b2eaee08
+D s-taprob.ads		20090409150019 502249e3
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+X 1 ada.ads
+16K9*Ada 19e8 24|1r6 2r6 7r6 11r29 75r1 78r1 83r1 86r17 86r66 87r17
+X 4 a-except.ads
+55K13*Exceptions 370e19 24|7w10 86r70 87r21
+77V13*Exception_Name{string} 24|86s81
+99V13*Exception_Message{string} 24|87s32
+X 9 a-string.ads
+16K13*Strings 35e16 24|2r10 11r33
+X 11 a-strunb.ads
+77K21*Unbounded 490e26 24|2w18 11r41
+80R9*Unbounded_String 474e14 24|13r22 15r21 16r21 17r21 18r21 19r21 20r21
+. 21r21 22r21 23r21 24r21 25r21 26r21 27r21 28r21 29r21 32r22 33r22 34r22
+. 35r22 36r22 37r22 38r22 39r22 40r22 41r22 42r22 43r22 44r22 45r22 48r52
+. 48r75
+95V13*To_Unbounded_String{80R9} 24|15s45 16s45 17s45 18s45 19s45 20s45 21s45
+. 22s45 23s45 24s45 25s45 26s45 27s45 28s45 29s45 32s46 33s46 34s46 35s46
+. 36s46 37s46 38s46 39s46 40s46 41s46 42s46 43s46 44s46 45s46
+101V13*To_String{string} 24|49r94 49r110
+167V13*"="{boolean}<5|64p24> 24|48r98
+175V13*"="{boolean} 24|48r98
+203V13*">"{boolean} 24|49r85
+X 13 a-textio.ads
+49K13*Text_IO 472e16 24|1w10 75r5 78r5 83r5 86r21
+264U14*Put_Line 24|75s13 78s13 83s13 86s29
+X 16 debug.ads
+3K9*Debug 24e10 24|6w6
+X 20 ordered_maps_g.ads
+13k9*Ordered_Maps_G 60e19 24|3w6 48r32
+X 22 ordered_maps_protector_g.ads
+5k9*Ordered_Maps_Protector_G 50e29 24|4w6 50r29
+7W9 Prot_Map 24|52r25[50]
+15U14 Put 24|58s14[50] 59s14[50] 60s14[50] 61s14[50] 62s14[50] 63s14[50]
+. 64s14[50] 65s14[50] 66s14[50] 67s14[50] 68s14[50] 69s14[50]
+19U14 Delete 24|77s14[50]
+23V13 Map_Length{natural} 24|74s23[50] 82s23[50]
+25U14 Print_Map 24|72s14[50] 80s13[50]
+X 24 ordered_maps_test2.adb
+9U11*Ordered_Maps_Test2 9b11 88l5 88t23
+11K17 ASU=11:41 13r18 15r17 15r41 16r17 16r41 17r17 17r41 18r17 18r41 19r17
+. 19r41 20r17 20r41 21r17 21r41 22r17 22r41 23r17 23r41 24r17 24r41 25r17
+. 25r41 26r17 26r41 27r17 27r41 28r17 28r41 29r17 29r41 32r18 32r42 33r18
+. 33r42 34r18 34r42 35r18 35r42 36r18 36r42 37r18 37r42 38r18 38r42 39r18
+. 39r42 40r18 40r42 41r18 41r42 42r18 42r42 43r18 43r42 44r18 44r42 45r18
+. 45r42 48r48 48r71 48r94 49r81 49r90 49r106
+15r9 URL1{11|80R9} 58r29
+16r9 URL2{11|80R9} 59r29 77r32
+17r9 URL3{11|80R9} 60r29
+18r9 URL4{11|80R9} 61r29
+19r9 URL5{11|80R9} 62r29
+20r9 URL6{11|80R9} 63r29
+21r9 URL7{11|80R9} 64r29
+22r9 URL8{11|80R9} 65r29
+23r9 URL9{11|80R9} 66r29
+24r9 URL10{11|80R9} 67r29
+25r9 URL11{11|80R9} 68r29
+26r9 URL12{11|80R9} 69r29
+27r9 URL13{11|80R9}
+28r9 URL14{11|80R9}
+29r9 URL15{11|80R9}
+32r9 IP1{11|80R9} 58r36
+33r9 IP2{11|80R9} 59r36
+34r9 IP3{11|80R9} 60r36
+35r9 IP4{11|80R9} 61r36
+36r9 IP5{11|80R9} 62r36
+37r9 IP6{11|80R9} 63r36
+38r9 IP7{11|80R9} 64r36
+39r9 IP8{11|80R9} 65r36
+40r9 IP9{11|80R9} 66r36
+41r9 IP10{11|80R9} 67r37
+42r9 IP11{11|80R9} 68r37
+43r9 IP12{11|80R9} 69r37
+44r9 IP13{11|80R9}
+45r9 IP14{11|80R9}
+48K17 NP_URLs[20|13] 50r55
+50K17 URLs[22|5] 52r20 58r9 59r9 60r9 61r9 62r9 63r9 64r9 65r9 66r9 67r9
+. 68r9 69r9 72r9 74r18 77r9 80r8 82r18
+52w9 Tree_URL{22|7W9[50]} 58m18 59m18 60m18 61m18 62m18 63m18 64m18 65m18
+. 66m18 67m18 68m18 69m18 72m24 74r34 77m21 80m23 82r34
+53b9 Success{boolean} 77m39
+55i9 Total{natural} 74m9 75r62 82m9 83r62
+85r14 Except{4|68R9} 86r96 87r50
+X 25 pantalla.ads
+11K9*Pantalla 24|5w6 25|39e13
+

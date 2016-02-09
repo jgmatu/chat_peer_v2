@@ -1,0 +1,664 @@
+-- Francisco Javier Gutierrez-Maturana Sanchez
+
+with Ada.Text_IO;
+with Debug;
+with Pantalla;	
+with Ada.Calendar;
+with Help;
+with Ada.Command_Line;
+with Ada.Exceptions;
+
+package body Aux_Peer is
+
+	use type CH.Seq_N_T;
+	use type LLU.End_Point_Type;
+	use type CM.Message_Type;
+	use type ASU.Unbounded_String;
+
+	package ACL renames Ada.Command_Line;
+
+	function CheckParameters return Boolean is
+	begin
+		return ACL.Argument_Count < 2 and ACL.Argument_Count rem 2 /= 0;
+	end CheckParameters;
+
+	function MyName return ASU.Unbounded_String is
+	begin
+		return ASU.To_Unbounded_String(ACL.Argument(2));
+	end MyName;
+
+
+	procedure Create_EP (EP_Handler : out LLU.End_Point_Type; Port : in Integer) is
+		Machine_Name : ASU.Unbounded_String;
+		Machine_IP   : ASU.Unbounded_String;	
+	begin
+		-- See our computer IP  
+		Machine_Name := ASU.To_Unbounded_String(LLU.Get_Host_Name);
+		Machine_IP   := ASU.To_Unbounded_String(LLU.To_IP(ASU.To_String(Machine_Name)));
+
+		--Create our two EP's
+		EP_Handler := LLU.Build(ASU.To_String(Machine_IP) , Port);
+		
+	end Create_EP;
+		
+	function Neighbors return Boolean is
+	begin
+		return (ACL.Argument_Count - 2)/2 /= 0;
+	end Neighbors;
+
+	-- Show EP 
+	function EP_Image (EP : LLU.End_Point_Type) return String is		
+		Client         : ASU.Unbounded_String;	
+		String_EP      : ASU.Unbounded_String;
+		Indice         : Natural := 0;
+		IP	       : ASU.Unbounded_String;
+		Port           : ASU.Unbounded_String;
+	begin
+			-- Obtain an EP
+			String_EP := ASU.To_Unbounded_String(LLU.Image(EP));
+
+			-- Cut IP	        
+			Indice := ASU.Index(String_EP , ":");
+			ASU.Tail(String_EP , ASU.Length(String_EP) - Indice - 1);
+			Indice := ASU.Index(String_EP , ",");		
+			IP := ASU.Head(String_EP , Indice - 1);
+
+			-- Cut Puerto
+			Indice := ASU.Index(String_EP , ":");
+			ASU.Tail(String_EP , ASU.Length(STring_EP) - Indice - 1);
+			Port := ASU.Head(String_EP , ASU.Length(String_EP));
+
+			-- Add to the EP an IP Port
+			String_EP := ASU.To_Unbounded_String(ASU.To_String(IP) & ":" & ASU.To_String(Port));
+
+		return ASU.To_String(String_EP);
+	end EP_Image;
+
+
+	procedure Create_Neighbors (Neighbors : out Type_Neighbors ; Num_Neighbors : Integer) is
+		Parametro : Integer;	
+	begin
+
+		-- We crate the parameters for sending then by flood
+		Parametro := 3;
+		for i in 1 .. Num_Neighbors loop
+			Neighbors(i).Host := ASU.To_Unbounded_String(ACL.Argument(Parametro));
+			Parametro := Parametro + 1;
+
+			-- Check if the port is not between 1 and 1024
+			if Integer'Value(ACL.Argument(Parametro)) > 1024 then
+				Neighbors(i).Port := Integer'Value(ACL.Argument(Parametro));
+			end if;
+			Parametro := Parametro + 1;
+		end loop;	
+	exception 
+		when Except:others =>
+			Ada.Text_IO.Put_Line("Exception Imprevista :" &
+			Ada.Exceptions.Exception_Name (Except) & " en : " & 
+			Ada.Exceptions.Exception_Message (Except));
+	end Create_Neighbors;
+
+	-- Write Neighbors
+	procedure Write_Neighbors (Neighbors : in Type_Neighbors ; Num_Neighbors : Integer) is
+	begin
+		for i in 1 .. Num_Neighbors loop
+			Ada.Text_IO.Put_Line("Vencino " & ASU.TO_String(Neighbors(i).Host) &
+			"  " & Integer'Image(Neighbors(i).Port));
+		end loop;
+	end Write_Neighbors;
+
+	-- We create the map with  the initial neighbors 
+	procedure Create_Map_Neighbors (Map_Neighbors : out CH.Neighbors.Prot_Map ; Success : out Boolean) is
+		Num_Neighbors : Integer;
+		Neighbors     : Type_Neighbors;
+		Neighbor_IP   : ASU.Unbounded_String;
+		Neighbor_EP   : LLU.End_Point_Type;
+		Time	      : Ada.Calendar.Time := Ada.Calendar.Clock;
+		Pos	      : Integer;
+	begin
+		Pos := 1;
+		Success := True;
+		-- we count the given number of neighbours receive like parameters 			
+		Num_Neighbors := (ACL.Argument_Count - 2)/2;
+		Create_Neighbors(Neighbors , Num_Neighbors);
+		loop
+			Neighbor_IP := ASU.To_Unbounded_String(LLU.To_IP(ASU.To_String(Neighbors(Pos).Host)));
+			Neighbor_EP := LLU.Build(ASU.To_String(Neighbor_IP) , Neighbors(Pos).Port);
+			-- Depuration Messages
+			debug.Put_Line("Adding to Neighbors " & ASU.To_String(Neighbor_IP) & " : " 												& Integer'Image(Neighbors(Pos).Port));
+			CH.Neighbors.Put(Map_Neighbors , Neighbor_EP , Time , Success);
+			Pos := Pos + 1;
+		exit when not Success or Pos > Num_Neighbors;	
+		end loop;
+		Ada.TexT_IO.New_Line;
+		Ada.TexT_IO.New_Line;
+	end Create_Map_Neighbors;
+
+	-- Debug Messages
+	procedure Debug_Msgs (EP_H_Create : in LLU.End_Point_Type ; Seq_N : in CH.Seq_N_T ; Nick : in ASU.Unbounded_String) is
+	begin
+		debug.Put(" " & EP_Image(EP_H_Create) & " " & CH.Seq_N_T'Image(Seq_N) & " ");
+		debug.Put(" " & EP_Image(EP_H_Create) & " " & ASU.To_String(Nick) & " ");
+		Ada.Text_IO.New_Line;	
+ 	end Debug_Msgs;
+
+	procedure Init (EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T ;  Nick : ASU.Unbounded_String ;
+						EP_Rsnd : LLU.End_Point_Type ;EP_Receive : LLU.End_Point_Type ; 
+						P_Buffer :  access LLU.Buffer_Type) is
+		Mess : CM.Message_Type := CM.Init;
+	begin
+		Ada.Text_IO.New_Line;
+
+		-- Debug Init Message for Flooding
+		debug.Put("FLOOD INIT " , pantalla.Amarillo);
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);
+
+		-- Prepare Buffer or Encapsulate Message Init
+		CM.Message_Type'Output(P_Buffer , Mess);
+		LLU.End_Point_Type'Output(P_Buffer , EP_H_Create);
+		CH.Seq_N_T'Output(P_Buffer , Seq_N);
+		LLU.End_Point_Type'Output(P_Buffer , EP_Rsnd);
+		LLU.End_Point_Type'Output(P_Buffer , EP_Receive);
+		ASU.Unbounded_String'Output(P_Buffer , Nick);
+				
+	end Init;
+
+	procedure Confirm (EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T  ; EP_Rsnd : LLU.End_Point_Type ; 
+							Nick : ASU.Unbounded_String ; P_Buffer : access LLU.Buffer_Type) is
+		Mess : CM.Message_Type := CM.Confirm;
+	begin
+		-- Debug Messages for Flooding Confirmation
+		debug.Put("FLOOD Confirm " , pantalla.Amarillo);	
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);
+	
+		-- Encapsulate Confirmation Message
+		CM.Message_Type'Output(P_Buffer , Mess);
+		LLU.End_Point_Type'Output(P_Buffer , EP_H_Create);
+		CH.Seq_N_T'Output(P_Buffer , Seq_N);
+		LLU.End_Point_Type'Output(P_Buffer , EP_Rsnd);
+		ASU.Unbounded_String'Output(P_Buffer , Nick);
+
+	end Confirm;
+
+	procedure Logout  (EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T ; EP_Rsnd : LLU.End_Point_Type ; 
+				Nick : ASU.Unbounded_String ; Confirm_Send : Boolean ; P_Buffer : access LLU.Buffer_Type) is
+		Mess : CM.Message_Type := CM.Logout;
+	begin
+		-- Debug Logout Messages
+		debug.Put("FLOOD Logout " , pantalla.amarillo);
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);
+
+
+		-- Encapsulate Logout Message
+		CM.Message_Type'Output(P_Buffer , Mess);
+		LLU.End_Point_Type'Output(P_Buffer , EP_H_Create);
+		CH.Seq_N_T'Output(P_Buffer , Seq_N);
+		LLU.End_Point_Type'Output(P_Buffer , EP_Rsnd);
+		ASU.Unbounded_String'Output(P_Buffer , Nick);
+		Boolean'Output(P_Buffer , Confirm_Send);
+
+	end Logout;
+
+	
+	procedure Writer(EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T ; EP_Rsnd : LLU.End_Point_Type ; 
+							    Nick : ASU.Unbounded_String ; Remark : ASU.Unbounded_String ;
+							    P_Buffer : access LLU.Buffer_Type) is
+		Mess : CM.Message_Type := CM.Writer;	
+	begin
+
+		--Debug the  Writer's Messages  
+		debug.Put("FLOOD Writer " , pantalla.amarillo);
+
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);
+
+		-- Encapsulate Writer's Message
+		CM.Message_Type'Output(P_Buffer , Mess);
+		LLU.End_Point_Type'Output(P_Buffer , EP_H_Create);	
+		CH.Seq_N_T'Output(P_Buffer , Seq_N);
+		LLU.End_Point_Type'Output(P_Buffer , EP_Rsnd);
+		ASU.Unbounded_String'Output(P_Buffer , Nick);	
+		ASU.Unbounded_String'Output(P_Buffer , Remark);		
+
+	end Writer;
+
+	-- Control Flood By Neighbors
+	--function Not_Send (EP_Not_Send : LLU.End_Point_Type) return Boolean is
+	--	Neighbors   : CH.Neighbors.Keys_Array_Type;
+	--	Num_Neigh   : Integer := 0; 			
+	--	Not_Send    : Boolean := False;
+	--begin
+	--	Neighbors := CH.Neighbors.Get_Keys(CH.Map_Neighbors);
+	--	Num_Neigh := CH.Neighbors.Map_Length(CH.Map_Neighbors);
+	--	for i in 1 .. Num_Neigh loop
+	--		if (Neighbors(i) = EP_Not_Send) then
+	--			Not_Send := True;
+	--		end if;
+	--	end loop;
+	--	return Not_Send;
+	--end Not_Send;
+
+	function Out_Logout (Mess : CM.Message_Type ; Success : Boolean) return Boolean is
+	begin
+		return Mess = CM.Logout and not Success;
+	end Out_Logout;
+
+	function isLatestMsgs (Seq_N : CH.Seq_N_T ; Value : CH.Seq_N_T ; Success : Boolean) return Boolean is
+	begin
+		return (Seq_N <= Value and Success);
+	end isLatestMsgs;
+	-- Control Flood
+	function noFlood (Seq_N : CH.Seq_N_T ; Value : CH.Seq_N_T ;EP_Not_Send : LLU.End_Point_Type ;  
+								Success : Boolean ; Mess : CM.Message_Type) return Boolean is
+	begin
+		return isLatestMsgs(Seq_N , Value , Success) or Out_Logout(Mess , Success);
+	end noFlood;
+
+	
+	-- Send Message To My Neighbors
+	procedure Send_Message (P_Buffer : access LLU.Buffer_Type ; EP_Not_Send : LLU.End_Point_Type) is
+		Neighbors   : CH.Neighbors.Keys_Array_Type;
+		Num_Neigh   : Integer := 0; 	
+	begin		
+		-- Get the neighbors list
+		Neighbors := CH.Neighbors.Get_Keys(CH.Map_Neighbors);
+		Num_Neigh := CH.Neighbors.Map_Length(CH.Map_Neighbors);
+		-- Send The Messages to the Neighbors except the client who sent the message
+		for i in 1 .. Num_Neigh loop
+			if Neighbors(i) /= EP_Not_Send then
+				LLU.Send(Neighbors(i) , P_Buffer);
+				debug.Put_Line("        send to : " & EP_Image(Neighbors(i)));
+			else
+				debug.Put_Line("NO FLOOD" , pantalla.amarillo);
+			end if;
+		end loop; 	
+
+	end Send_Message;
+
+	-- Add To LAtest Messages
+	procedure Add_Latest_Messages (EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T) is
+		Success : Boolean := False;	
+	begin
+		-- Debug Messages by Adding it to the Latest Messages
+		debug.Put("        Adding to Latest Messages " & EP_Image(EP_H_Create) & CH.Seq_N_T'Image(Seq_N));
+		CH.Latest_Msgs.Put(CH.Map_Latest_Messages , EP_H_Create , Seq_N  , Success);
+		if Success then debug.Put_Line(" OK"); else debug.Put_Line(" FAIL"); end if;
+	end Add_Latest_Messages;
+
+	-- Send by Flooding
+	procedure Flood (EP_H_Create : LLU.End_Point_Type ; Seq_N : in CH.Seq_N_T ; EP_Rsnd : 
+						LLU.End_Point_Type; EP_Receive : LLU.End_Point_Type := null ; 
+						Nick : 	ASU.Unbounded_String ; EP_Not_Send : LLU.End_Point_Type ; 
+						Mess : CM.Message_Type ; Confirm_Send : in Boolean := False ; 
+						Remark : ASU.Unbounded_String := ASU.Null_Unbounded_String) is
+
+		Buffer	    : aliased LLU.Buffer_Type(1024);
+		Value	    : CH.Seq_N_T;
+		Success	    : Boolean;	
+	begin
+		-- Show Latest_Messages EP_H_Create
+   		CH.Latest_Msgs.Get (CH.Map_Latest_Messages, EP_H_Create, Value, Success);
+		
+		if not noFlood (Seq_N , Value , EP_Not_Send , Success , Mess) then
+			Add_Latest_Messages(EP_H_Create , Seq_N);
+			case Mess is
+				when CM.Init =>
+					Init(EP_H_Create, Seq_N , Nick , EP_Rsnd , EP_Receive ,Buffer'Access);
+				when CM.Confirm =>
+					Confirm(EP_H_Create , Seq_N  , EP_Rsnd , Nick , Buffer'Access);
+				when CM.Writer =>
+					Writer(EP_H_Create , Seq_N , EP_Rsnd , Nick ,  Remark , Buffer'Access);
+				when CM.Logout =>
+					Logout(EP_H_Create , Seq_N , EP_Rsnd , Nick , Confirm_Send , Buffer'Access);
+				when others =>
+					debug.Put_Line("This messages is not send for flood" , pantalla.azul);
+			end case;
+			Send_Message(Buffer'Access , EP_Not_Send);
+		else 
+			debug.Put_Line("NO FLOOD" , pantalla.amarillo);	
+		end if;
+	end Flood;
+
+	-- Wait a Message Reject
+	function isReject (EP_Receive : LLU.End_Point_Type) return Boolean is
+		Expired : Boolean := False;
+		Buffer  : aliased LLU.Buffer_Type (1024);
+	begin
+		LLU.Reset(Buffer);
+		-- Wait to receive Rejection message
+		LLU.Receive(EP_Receive , Buffer'Access , 2.0 , Expired);
+		if not Expired then debug.Put_Line("RCV Reject" , pantalla.amarillo); end if;
+		-- If not Expired is because we have received a Reject Message
+		return not Expired;
+	end isReject;
+
+
+	-- Send Message Reject
+	procedure Reject (EP_H : LLU.End_Point_Type ; EP_Receive : LLU.End_Point_Type ; Nick : ASU.Unbounded_String) is
+		Buffer : aliased LLU.Buffer_Type(1024);
+		Mess   : CM.Message_Type;	
+	begin
+		debug.Put("Send REJECT " , pantalla.amarillo);
+		debug.Put(EP_Image(EP_Receive) & " " );
+		debug.Put_Line(ASU.To_String(Nick) & "  ...");
+		Mess := CM.Reject;
+		-- Prepare Buffer
+		CM.Message_Type'Output(Buffer'Access , Mess);
+		LLU.End_Point_Type'Output(Buffer'Access , EP_H);
+		ASU.Unbounded_String'Output(Buffer'Access , Nick);
+	
+		-- Send Message
+		LLU.Send(EP_Receive , Buffer'Access);
+	end Reject;
+
+	procedure Update_Field_EP (EP_Rsnd : out LLU.End_Point_Type ; EP_Not_Send : out LLU.End_Point_Type ; 
+						EP_Rsnd_New : LLU.End_Point_Type ; EP_Not_Send_New : LLU.End_Point_Type) is
+	begin
+		EP_Rsnd := EP_Rsnd_New;
+		EP_Not_Send := EP_Not_Send_New;
+	end Update_Field_EP;
+
+
+	procedure Prepare_Logout_Creater (EP_H_Create : LLU.End_Point_Type ; Seq_N :  out CH.Seq_N_T ; 
+		EP_Rsnd : out LLU.End_Point_Type ; EP_Not_Send : out LLU.End_Point_Type ; Mess :  out CM.Message_Type) is
+	begin
+		Seq_N := 2;
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , EP_H_Create , EP_H_Create);
+		Mess	:= CM.Logout;
+	end Prepare_Logout_Creater;	
+
+
+	procedure Prepare_Confirm_Creater (EP_H_Create : LLU.End_Point_Type ; Seq_N :  out CH.Seq_N_T ; EP_Rsnd : out 					LLU.End_Point_Type ; EP_Not_Send : out LLU.End_Point_Type ; Mess :  out CM.Message_Type) is
+	begin
+		Seq_N := 2;
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , EP_H_Create , EP_H_Create);
+		Mess	:= CM.Confirm;
+	end Prepare_Confirm_Creater;	
+
+	
+	-- Protocol Admision
+	procedure Admision_Protocol (EP_H_Create : LLU.End_Point_Type ; EP_Receive : LLU.End_Point_Type ; Quit : out Boolean) is
+		Mess        : CM.Message_Type := CM.Init;
+		Seq_N       : CH.Seq_N_T := 1;
+		EP_Rsnd     : LLU.End_Point_Type;
+		EP_Not_Send : LLU.End_Point_Type;	
+		NickName    : ASU.Unbounded_String;
+	begin
+		NickName := ASU.To_Unbounded_String(ACL.Argument(2));
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , EP_H_Create , EP_H_Create);		
+		Flood(EP_H_Create , Seq_N , EP_Rsnd , EP_Receive , NickName , EP_Not_Send , Mess);
+
+		if isReject(EP_Receive) then
+			Prepare_Logout_Creater(EP_H_Create , Seq_N , EP_Rsnd, EP_Not_Send , Mess);
+			Flood(EP_H_Create , Seq_N , EP_Rsnd , EP_Receive , NickName , EP_Not_Send , Mess);
+			Quit := True;
+		else	
+			Prepare_Confirm_Creater(EP_H_Create , Seq_N , EP_Rsnd, EP_Not_Send , Mess);
+			Flood(EP_H_Create , Seq_N , EP_Rsnd , EP_Receive , NickName , EP_Not_Send , Mess);
+			Quit := False;
+		end if;	
+	end Admision_Protocol;
+	
+	function notShow(Seq_N : CH.Seq_N_T ; Value : CH.Seq_N_T ; Success : Boolean ; Mess : CM.Message_Type) return Boolean is
+	begin
+		return  (Seq_N <= Value and Success) or (Mess = CM.Logout and not Success);
+	end notShow; 
+
+	procedure Screen_Control (Map_Latest_Messages : in out CH.Latest_Msgs.Prot_Map ; EP_H_Create : LLU.End_Point_Type ; 
+								Seq_N : CH.Seq_N_T ; Nick : ASU.Unbounded_String ;  									Mess : CM.Message_Type ; 
+								Remark : ASU.Unbounded_String := ASU.Null_Unbounded_String) is
+		Value  : CH.Seq_N_T := 0;
+		Success   : Boolean := False;
+		Not_Show  : Exception; 	
+	begin
+		-- Control for a lot of neighbors
+		CH.Latest_Msgs.Get(Map_Latest_Messages , EP_H_Create , Value , Success);
+		
+		if notShow(Seq_N , Value , Success , Mess) then
+			raise Not_Show;		
+		end if;
+
+		case Mess is
+			when CM.Confirm =>
+				-- Show on the screen  who  is Joining the chat room
+				Ada.Text_IO.Put_Line(ASU.To_String(Nick) & " joins to Chat");
+			when CM.Writer =>
+				-- Show the Remark on Screen 		
+				Ada.Text_IO.Put_Line(ASU.To_String(Nick) & " :" & ASU.To_String(Remark));
+			when CM.Logout =>
+				Ada.Text_IO.Put_Line(ASU.To_String(Nick) & " leaves the chat");
+			when others =>
+				Ada.Text_IO.Put_Line("*****");				
+		end case;	
+	exception
+		when Not_Show =>	
+			null;
+	end Screen_Control;	
+
+	procedure Screen_Writer (EP_H_Create : LLU.End_Point_Type ; EP_Receive : LLU.End_Point_Type ; Quit : in out Boolean) is
+		Mess : CM.Message_Type := CM.Writer;
+		-- the First Number Sequence after Admision Protocol
+		Seq_N : CH.Seq_N_T := 3;
+		Remark : ASU.Unbounded_String;	
+		EP_Rsnd : LLU.End_Point_Type;
+		EP_Not_Send : LLU.End_Point_Type;
+		Status : Boolean := True;
+		Prompt : Boolean := False;
+		NickName : ASU.Unbounded_String;
+	begin		
+		NickName := ASU.To_Unbounded_String(ACL.Argument(2));
+		-- Begin Chat
+		if not Quit then
+			Ada.Text_IO.Put_Line("Chat_Peer");
+			Ada.TexT_IO.Put_Line("=========");
+			Ada.TexT_IO.Put_Line("Logging into chat with nick : " & ASU.TO_String(NickName));
+			Ada.Text_IO.Put_Line(".h for help");
+			-- All the Mess Messagers from this point are Writer
+			Mess := CM.Writer;
+			-- EP_Rsnd and EP_Not_Send and EP_H_Create are  the same field
+			Update_Field_EP (EP_Rsnd , EP_Not_Send , EP_H_Create , EP_H_Create); 
+		end if;
+		-- Writer's Interface on the screen
+		while not Quit loop
+			Remark := ASU.To_Unbounded_String(Ada.Text_IO.Get_Line);
+			if Help.Patron(Remark) then
+				Help.Main_Help(Remark , Quit , EP_H_Create , EP_Receive , NickName , Seq_N , Status,  Prompt);
+			else
+				if ASU.TO_String(Remark) /= "" then
+					Flood(EP_H_Create ,Seq_N , EP_Rsnd, null, NickName , EP_Not_Send , Mess , False , Remark);
+					Seq_N := Seq_N + 1;
+				end if;
+			end if;
+			if Prompt then
+				Ada.Text_IO.Put(ASU.To_String(NickName) & " >> ");
+			end if;
+		end loop;
+	end Screen_Writer;	
+
+	-- Debug Messages by Adding to Neighbors and Add Neighbors			
+	procedure Add_Neighbors (EP_H_Create : in LLU.End_Point_Type ; EP_Rsnd : in LLU.End_Point_Type) is
+		Time_Value   : Ada.Calendar.Time;
+		Success : Boolean := False;			
+	begin		
+		Time_Value := Ada.Calendar.Clock;		
+		if EP_Rsnd = EP_H_Create then
+			debug.Put("        Adding to Neighbors " & EP_Image(EP_H_Create));
+			CH.Neighbors.Put(CH.Map_Neighbors , EP_H_Create , Time_Value , Success);
+			if Success then debug.Put_Line(" OK"); else debug.Put_Line(" FAIL"); end if;
+		end if;
+	end Add_Neighbors;
+
+	-- RCV_INIT
+	procedure RCV_Init (P_Buffer : access LLU.Buffer_Type ; EP_H_Create : out LLU.End_Point_Type ;
+						Seq_N : out CH.Seq_N_T ; EP_Rsnd : out LLU.End_Point_Type ; 
+						EP_R_Create : out LLU.End_Point_Type ; Nick : out ASU.Unbounded_String) is
+	begin	
+		debug.Put ("RCV Init  " , pantalla.Amarillo);
+		EP_H_Create := LLU.End_Point_Type'Input(P_Buffer);
+		Seq_N := CH.Seq_N_T'Input(P_Buffer);			
+		EP_Rsnd := LLU.End_Point_Type'Input(P_Buffer);
+		EP_R_Create := LLU.End_Point_Type'Input(P_Buffer);
+		Nick	:= ASU.UnboundeD_String'Input(P_Buffer);	
+	
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);
+	end RCV_Init;
+
+	-- Allow the Name in ChatRoom	
+	procedure Allow_Name (EP_H_Create : in LLU.End_Point_Type ; Seq_N : in CH.Seq_N_T ; EP_R_Create : in LLU.End_Point_Type ; 				 To : in  LLU.End_Point_Type ; EP_Rsnd : in out LLU.End_Point_Type ; Nick : in ASU.Unbounded_String) is
+		NickName    : ASU.Unbounded_String;
+		Mess	    : CM.Message_Type;
+		EP_Not_Send : LLU.End_Point_Type; 
+	begin
+		NickName := MyName;
+		if Nick /= NickName and EP_H_Create /= To then
+			Mess := CM.Init;
+			Update_Field_EP(EP_Rsnd , EP_Not_Send , To , EP_Rsnd);
+			Flood(EP_H_Create , Seq_N , EP_Rsnd , EP_R_Create , Nick, EP_Not_Send , Mess);
+		else
+			Reject(To , EP_R_Create , Nick);
+		end if;
+	end Allow_Name;
+
+	procedure RCV_Admision (P_Buffer : access LLU.Buffer_Type ; To : LLU.End_Point_Type) is
+		EP_H_Create : LLU.End_Point_Type;
+		Seq_N       : CH.Seq_N_T;
+		EP_Rsnd     : LLU.End_Point_Type;
+		EP_R_Create : LLU.End_Point_Type;
+		Nick	    : ASU.Unbounded_String;			
+	begin
+		RCV_Init(P_Buffer, EP_H_Create ,Seq_N , EP_Rsnd , EP_R_Create , Nick);		
+		ADD_Neighbors(EP_H_Create , EP_Rsnd);
+		Allow_Name(EP_H_Create , Seq_N ,EP_R_Create , To , EP_Rsnd , Nick);
+	end RCV_Admision;
+
+
+	procedure RCV_Confirm (P_Buffer : access LLU.Buffer_Type ; EP_H_Create : out LLU.End_Point_Type ; Seq_N : out CH.Seq_N_T ;
+							 EP_Rsnd : out LLU.End_Point_Type ; Nick : out ASU.Unbounded_String) is
+	begin
+		debug.Put ("RCV Confirm  " , pantalla.Amarillo);
+
+		-- Unencapsulate Message				
+		EP_H_Create := LLU.End_Point_Type'Input(P_Buffer);
+		Seq_N := CH.Seq_N_T'Input(P_Buffer);
+		EP_Rsnd := LLU.End_Point_Type'Input(P_Buffer);
+		Nick := ASU.Unbounded_String'Input(P_Buffer);
+
+		debug_Msgs(EP_H_Create , Seq_N , Nick);
+	end RCV_Confirm;
+
+	
+	procedure RCV_Admision_End (P_Buffer : access LLU.Buffer_Type ; To : LLU.End_Point_Type) is
+		Mess 	    : CM.Message_Type := CM.Confirm;		
+		EP_H_Create : LLU.End_Point_Type;
+		Seq_N       : CH.Seq_N_T;
+		EP_Rsnd     : LLU.End_Point_Type;
+		Nick	    : ASU.Unbounded_String;	
+		EP_Not_Send : LLU.End_Point_Type;
+	begin
+		RCV_Confirm(P_Buffer , EP_H_Create, Seq_N , EP_Rsnd , Nick);
+		Screen_Control (CH.Map_Latest_Messages, EP_H_Create , Seq_N , Nick , Mess);
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , To , EP_Rsnd);	
+		Flood(EP_H_Create , Seq_N , EP_Rsnd , null , Nick, EP_Not_Send , Mess);
+	end RCV_Admision_End;
+	
+	procedure RCV_Writer (P_Buffer : access LLU.Buffer_Type ; EP_H_Create : out LLU.End_Point_Type ; Seq_N : out CH.Seq_N_T ; 				EP_Rsnd : out LLU.End_Point_Type ; Nick : out ASU.Unbounded_String ; Remark : out ASU.Unbounded_String) is
+	begin
+		debug.Put("RCV Writer " , pantalla.amarillo);
+				
+		-- Unencapsulate  the Writer's Message
+		EP_H_Create := LLU.End_Point_Type'Input(P_Buffer);
+		Seq_N := CH.Seq_N_T'Input(P_Buffer);
+		EP_Rsnd := LLU.End_Point_Type'Input(P_Buffer);
+		Nick := ASU.Unbounded_String'Input(P_Buffer);
+		Remark := ASU.Unbounded_String'Input(P_Buffer);
+
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);		
+
+	end RCV_Writer;
+	
+	procedure RCV_Writers (P_Buffer : access LLU.Buffer_Type ; To : LLU.End_Point_Type) is
+		Mess 	    : CM.Message_Type := CM.Writer;				
+		EP_H_Create : LLU.End_Point_Type;
+		Seq_N       : CH.Seq_N_T;
+		EP_Rsnd     : LLU.End_Point_Type;
+		Nick	    : ASU.Unbounded_String;
+		Remark      : ASU.Unbounded_String := ASU.Null_Unbounded_String;
+		EP_Not_Send : LLU.End_Point_Type;	
+	begin
+		RCV_Writer (P_Buffer , EP_H_Create , Seq_N , EP_Rsnd , Nick , Remark);
+		Screen_Control (CH.Map_Latest_Messages, EP_H_Create , Seq_N , Nick ,  Mess , Remark);
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , To , EP_Rsnd);
+		Flood (EP_H_Create ,Seq_N,EP_Rsnd , null , Nick , EP_Not_Send , Mess , False , Remark);		
+	end RCV_Writers;
+
+	procedure RCV_Logout (P_Buffer : access LLU.Buffer_Type ; EP_H_Create : out LLU.End_Point_Type ; 
+					Seq_N : out CH.Seq_N_T ; EP_Rsnd : out LLU.End_Point_Type ; 
+					Nick : out ASU.Unbounded_String ; Confirm_Send : out Boolean) is
+	begin
+		debug.Put("RCV Logout" , Pantalla.Amarillo);
+			
+		-- Unencapsulate the logout  Message	
+		EP_H_Create := LLU.End_Point_Type'Input(P_Buffer);
+		Seq_N := CH.Seq_N_T'Input(P_Buffer);
+		EP_Rsnd := LLU.End_Point_Type'Input(P_Buffer);
+		Nick := ASU.Unbounded_String'Input(P_Buffer);				
+		Confirm_Send := Boolean'Input(P_Buffer);
+			
+		Debug_Msgs(EP_H_Create , Seq_N , Nick);		
+
+	end RCV_Logout;
+
+	procedure Delete_Neighbor (EP_H_Create : LLU.End_Point_Type ; EP_Rsnd : LLU.End_Point_Type) is
+		Success : Boolean := False;
+	begin		
+		-- Delete the Neighbor's end point
+		if EP_H_Create = EP_Rsnd then
+			debug.Put("Deleting Neighbor ...");	
+			CH.Neighbors.Delete(CH.Map_Neighbors , EP_H_Create , Success);
+			if Success then Debug.Put_Line(" OK"); else debug.Put_Line(" FAIL"); end if;	
+		end if;
+	end Delete_Neighbor;
+
+
+
+	-- Show  that the user has left the chatroom
+	procedure Show_Leave (Mess : CM.Message_Type ; EP_H_Create : LLU.End_Point_Type ; Seq_N : CH.Seq_N_T ; 
+								Nick : ASU.Unbounded_String ; Confirm_Send : Boolean ) is
+	begin
+		if Confirm_Send then
+			Screen_Control (CH.Map_Latest_Messages, EP_H_Create , Seq_N , Nick , Mess);
+		end if;	
+	end Show_Leave;
+
+	procedure Delete_Ltst_Msgs (EP_H_Create : LLU.End_Point_Type) is
+		Success : Boolean;
+	begin
+		-- Delete the Latest End Point Messages 
+		debug.Put("Deleting Latest Messages ...");				
+		CH.Latest_Msgs.Delete(CH.Map_Latest_Messages , EP_H_Create , Success);
+		if Success then Debug.Put_Line(" OK"); else debug.Put_Line(" FAIL"); end if;
+
+	end Delete_Ltst_Msgs;
+
+	procedure RCV_Logouts (P_Buffer : access LLU.Buffer_Type ; To : LLU.End_Point_Type) is
+		Mess	     : CM.Message_Type := CM.Logout;			
+		EP_H_Create  : LLU.End_Point_Type;
+		Seq_N 	     : CH.Seq_N_T;
+		EP_Rsnd	     : LLU.End_Point_Type;
+		Nick	     : ASU.Unbounded_String;
+		Confirm_Send : Boolean := True;		
+		EP_Not_Send  : LLU.End_Point_Type;	
+	begin
+		RCV_Logout(P_Buffer, EP_H_Create , Seq_N , EP_Rsnd , Nick , Confirm_Send);
+
+		Delete_Neighbor (EP_H_Create , EP_Rsnd);
+
+		Show_Leave(Mess , EP_H_Create , Seq_N , Nick , Confirm_Send);
+
+		Update_Field_EP(EP_Rsnd , EP_Not_Send , To , EP_Rsnd);
+		Flood(EP_H_Create , Seq_N , EP_Rsnd , null , Nick, EP_Not_Send , Mess , Confirm_Send);
+
+		Delete_Ltst_Msgs(EP_H_Create);		
+	end RCV_Logouts;
+				
+end Aux_Peer;
+

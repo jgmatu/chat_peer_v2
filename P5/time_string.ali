@@ -1,0 +1,148 @@
+V "GNAT Lib v4.6"
+P SS ZX
+R nnnnnnnvnvvnnnnnnnnnnnnvnvnnnnnnnnvnnnnnnvnnvnnnnnnnnnnnnnvnnnnnnnnnnnnnnnnnnnnn
+
+U time_string%b		time_string.adb		2e4cddc5 NE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.calendar%s	g-calend.adb		g-calend.ali
+W gnat.calendar.time_io%s  g-catiio.adb		g-catiio.ali
+W system%s		system.ads		system.ali
+W system.finalization_implementation%s  s-finimp.adb  s-finimp.ali
+W system.finalization_root%s  s-finroo.adb	s-finroo.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.img_lld%s	s-imglld.adb		s-imglld.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+U time_string%s		time_string.ads		c23433dd EE NE OO PK IL
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20090409150019 343c83dd
+D a-charac.ads		20070912115821 2d3ec45b
+D a-chlat1.ads		20070912115821 2825df20
+D a-except.ads		20090727140100 0c711ac9
+D a-finali.ads		20090409150019 e5e85fa4
+D a-filico.ads		20090409150019 872dc219
+D a-ioexce.ads		20091130110856 8b9de6cd
+D a-stream.ads		20090409150019 2ca4ee37
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150019 9cb836fb
+D a-strunb.ads		20101220072657 e684739b
+D a-tags.ads		20101021101406 c7695348
+D a-textio.ads		20091028140912 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20050905075125 fd2ad2f1
+D g-calend.ads		20100909103250 ed16288f
+D g-catiio.ads		20080820161238 b8a4f3d4
+D interfac.ads		20090409150019 f77d8799
+D i-c.ads		20101007125900 809c38c4
+D i-cstrea.ads		20100622165701 1bd72c32
+D system.ads		20140416172229 23e1f70b
+D s-crtl.ads		20100617122610 ac77b159
+D s-exctab.ads		20090417131547 66e51330
+D s-ficobl.ads		20100909103250 443b9d66
+D s-finimp.ads		20090409150019 46853fe8
+D s-finroo.ads		20090409150019 dbb860c9
+D s-imgint.ads		20090409150019 02dbe0c2
+D s-imglld.ads		20090409150019 f3220969
+D s-parame.ads		20091130110856 9c5d83fa
+D s-secsta.ads		20090707124243 eea35a36
+D s-soflin.ads		20090729085153 9414c974
+D s-stache.ads		20090417130712 596fc1b4
+D s-stalib.ads		20101021102512 c4241c00
+D s-stoele.ads		20090417130712 facd7d98
+D s-stoele.adb		20100617152355 afc5dc80
+D s-stratt.ads		20100909123135 aedef97e
+D s-traent.ads		20090417130712 5221ee41
+D s-unstyp.ads		20090409150019 6ae15c76
+D s-wchcon.ads		20090417130712 bfeb2e3d
+D time_string.ads	20141224125547 f608b000
+D time_string.adb	20141224125435 8a359b83
+X 1 ada.ads
+16K9*Ada 19e8 41|1r6 5r30 7r30 9r31 11r36 13r28 13r53 15r28 15r53 42|1r6
+. 2r6 3r6 8r24 11r13 13r25 22r12 39r25 45r25 50r26 53r21 57r31 58r21 69r22
+. 73r23 73r48 74r20 75r20 76r20 78r20 79r20 86r23 86r48 87r20 88r20 91r20
+. 92r20
+X 2 a-calend.ads
+36K13*Calendar 358e17 41|1w10 5r34 7r34 9r35 11r40 13r32 13r57 15r32 15r57
+. 42|2w10 11r17 13r29 22r16 39r29 45r29 50r30 53r25 57r35 58r25 69r26 73r27
+. 73r52 74r24 75r24 76r24 78r24 79r24 86r27 86r52 87r24 88r24 91r24 92r24
+38I9*Time 41|5r43 7r43 9r44 11r49 13r41 13r66 15r41 15r66 42|11r26 13r38
+. 39r38 45r38 50r39 57r44 58r34 73r36 73r61 86r36 86r61
+50O12*Day_Duration{duration} 42|74r33 75r33 76r33 87r33 88r33
+61V13*Seconds{50O12} 42|22s25 53s34 78s33 79s33 91s33 92s33
+74V13*Time_Of{38I9} 42|69s35
+X 10 a-string.ads
+16K13*Strings 35e16 42|3r10 8r28
+X 12 a-strunb.ads
+77K21*Unbounded 490e26 42|3w18 8r36
+80R9*Unbounded_String 474e14 42|14r20 20r31
+85V13*Length{natural} 42|30s32 31s32 32s32 33s32
+95V13*To_Unbounded_String{80R9} 42|27s18 28s18 29s18
+101V13*To_String{string} 42|35s18
+120V13*"&"{80R9} 42|34s24 34s36
+124V13*"&"{80R9} 42|34s18 34s30
+397V13*Head{80R9} 42|33s18
+407V13*Tail{80R9} 42|30s18 31s18 32s18
+X 14 a-textio.ads
+49K13*Text_IO 472e16 42|1w10
+X 16 gnat.ads
+36K9*GNAT 39e9 42|4r6 9r25
+X 17 g-calend.ads
+45K14*Calendar 150e18 42|4r11 9r30
+X 18 g-catiio.ads
+37K23*Time_IO 156e26 42|4w20 9r39
+113V13*Image{string} 42|41s19 47s19
+X 41 time_string.ads
+3K9*time_string 18l5 18e16 42|6b14 97l5 97t16
+5V18*Image_1{string} 5>27 42|13b13 36l8 36t15
+5i27 T{2|38I9} 42|13b22 22r33
+7V18*Image_2{string} 7>27 42|39b13 42l8 42t15
+7i27 T{2|38I9} 42|39b22 41r25
+9V18*Image_S{string} 9>27 42|50b13 55l8 55t15
+9i27 T{2|38I9} 42|50b22 53r42
+11V18*Null_Clock{2|38I9} 42|57b13 71l8 71t18
+13V18*"="{boolean} 13>23 13>48 42|73b13 84l8 84t11 94s20
+13i23 T1{2|38I9} 42|73b18 78r41
+13i48 T2{2|38I9} 42|73b43 79r41
+15V18*"<"{boolean} 15>23 15>48 42|86b13 95l8 95t11
+15i23 T1{2|38I9} 42|86b18 91r41 94r24
+15i48 T2{2|38I9} 42|86b43 92r41 94r29
+X 42 time_string.adb
+8K12 ASU=8:36 14r16 20r27 27r14 28r14 29r14 30r14 30r28 31r14 31r28 32r14
+. 32r28 33r14 33r28 35r14
+9K12 C_IO=9:39 41r14 47r14
+16i7 S_Decimals{integer} 33r47
+17o7 D{duration} 22m7 23r20 24m7 24r12 25r20 26r12
+18i7 H{integer} 23m7 24r25 27r52
+18i10 M{integer} 25m7 26r25 28r52
+19o7 S{duration} 26m7 29r53
+20r7 Hst{12|80R9} 27m7 30m7 30r23 30r39 34r14
+20r12 Mst{12|80R9} 28m7 31m7 31r23 31r39 34r26
+20r17 Sst{12|80R9} 29m7 32m7 32r23 32r39 33m7 33r23 33r39 34r38
+20r22 Tst{12|80R9} 34m7 35r28
+45V13 Image_3{string} 45b13 45>22 48l8 48t15
+45i22 T{2|38I9} 47r25
+51o10 Seconds{duration} 53m10 54r32
+58i9 Time_Null{2|38I9} 69m9 70r16
+59i9 Day{integer} 65m9 69r59
+60i9 Hour{integer} 64m9
+60i16 Month{integer} 66m9 69r51
+61o9 Seconds{duration} 67m9 69r65
+62i9 Year{integer} 68m9 69r43
+74o9 Second1{2|50O12} 78m9 81r25
+75o9 Second2{2|50O12} 79m9 81r35
+76o9 Estimate{2|50O12} 81m9 83r16
+87o9 Second1{2|50O12} 91m9 94r37
+88o9 Second2{2|50O12} 92m9 94r47
+
